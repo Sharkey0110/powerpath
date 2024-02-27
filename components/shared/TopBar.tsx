@@ -4,7 +4,7 @@ export default function Topbar(){
     return(
         <header className="sticky top-0 flex px-4 py-2 h1 justify-between items-center bg-primary">
             <div>
-                <h1 className="h1">PowerPath</h1>
+                <h1 className="h1">PowerPaths</h1>
             </div>
 
             <div>
