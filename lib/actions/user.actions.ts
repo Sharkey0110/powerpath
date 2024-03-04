@@ -20,7 +20,7 @@ export async function createUser(user: CreateUserProps){
 
 export async function deleteUser(clerkId: string){
   try{
-    connectToDB()
+    await connectToDB()
     const userToDelete = await User.findOne({ clerkId })
 
     if(!userToDelete){
