@@ -13,3 +13,8 @@ export type UpdateUserProps = {
   username: string;
   photo: string;
 };
+
+export type SearchParamsProps = {
+  params: { id: string}
+  searchParams: { [key: string]: string | string[] | undefined }
+}

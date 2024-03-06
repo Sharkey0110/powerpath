@@ -16,7 +16,7 @@ export const navItems = [
   },
   {
       label:"Profile",
-      route:"/profile/",
+      route:"/profile",
       icon: '/icons/user.png'
   }
 ]

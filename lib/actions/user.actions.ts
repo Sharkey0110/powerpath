@@ -49,3 +49,12 @@ export async function updateUser(clerkId: string, user: UpdateUserProps){
     handleError(e)
   }
 }
+
+export async function getUserById(userId: string){
+  try{
+    await connectToDB()
+    return await User.findOne({ clerkId: userId })
+  } catch (error) {
+    handleError(error)
+  }
+}
