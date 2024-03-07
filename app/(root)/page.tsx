@@ -1,8 +1,3 @@
-export default function Home(){
-
-  return(
-      <main className="mb-auto">
-          Home
-      </main>
-  )
+export default async function Home() {
+  return <main className="mb-auto">Home</main>;
 }
