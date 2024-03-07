@@ -15,6 +15,10 @@ export type UpdateUserProps = {
 };
 
 export type SearchParamsProps = {
-  params: { id: string}
-  searchParams: { [key: string]: string | string[] | undefined }
-}
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export type CreateTagProps = {
+  tagName: string;
+};
