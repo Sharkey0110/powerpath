@@ -97,7 +97,7 @@ export default function PostForm({ userId, type, post, postId }: PostProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Textarea placeholder="Description" {...field} />
+                  <Textarea placeholder="Description" {...field} className="bg-secondary text-white border-none focus-visible:ring-transparent" />
                 </FormControl>
               </FormItem>
             )}
@@ -117,17 +117,18 @@ export default function PostForm({ userId, type, post, postId }: PostProps) {
               </FormItem>
             )}
           />
-        </div>
 
         <Button
          type="submit"
          size='lg'
          disabled={form.formState.isSubmitting}
+         className="rounded-xl max-w-[400px] mx-auto mb-5"
         >
           {form.formState.isSubmitting ? (
             'Posting...'
           ): `${type} Post`}
         </Button>
+        </div>
       </form>
     </Form>
   );

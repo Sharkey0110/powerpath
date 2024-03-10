@@ -51,23 +51,23 @@ export default function Dropdown({ value, onChangeHandler }: DropdownProps){
 
   return (
     <Select onValueChange={onChangeHandler} defaultValue={value}>
-      <SelectTrigger className="select-field">
+      <SelectTrigger className="bg-secondary border-none focus-visible:ring-0">
         <SelectValue placeholder="Tag" />
       </SelectTrigger>
       <SelectContent>
         {tags.length > 0 && tags.map((tag) => (
-          <SelectItem key={tag._id} value={tag._id}>
+          <SelectItem key={tag._id} value={tag._id} className="text-md font-semibold">
             {tag.tagName}
           </SelectItem>
         ))}
 
         <AlertDialog>
-          <AlertDialogTrigger>Add new tag</AlertDialogTrigger>
+          <AlertDialogTrigger className="pl-8 pt-2 text-slate-500">Add new tag</AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>New Tag</AlertDialogTitle>
               <AlertDialogDescription>
-                <Input type="text" placeholder="Tag name" className="input-field mt-3" onChange={(e) => setNewTag(e.target.value)} />
+                <Input type="text" placeholder="Tag name" className="mt-3" onChange={(e) => setNewTag(e.target.value)} />
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
