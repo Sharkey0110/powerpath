@@ -30,5 +30,4 @@ export type CreatePostProps = {
     picture: string;
     tag?: string;
   }
-  path: string;
 }

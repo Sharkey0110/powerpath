@@ -1,16 +1,18 @@
 import PostForm from "@/components/shared/PostForm";
-import { auth } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 
-export default function CreatePostPage() {
-  const { sessionClaims } = auth();
-  const userId = sessionClaims?.userId as string;
+export default async function CreatePostPage() {
+  const user = await currentUser();
+
+  if(!user) return null
+  
   return (
     <main className="mb-auto">
       <div className="bg-primary p-5 rounded-xl mt-10 max-w-[400px] mx-auto">
         <h1 className="text-2xl text-center">Creating a Post</h1>
       </div>
       <div className="pt-12">
-        <PostForm userId={userId} type="Create" />
+        <PostForm userId={user.id} type="Create" />
       </div>
     </main>
   );

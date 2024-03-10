@@ -53,18 +53,11 @@ export default function PostForm({ userId, type, post, postId }: PostProps) {
       uploadedImageUrl = uploadedImages[0].url
     }
 
-    const newPost = {
-      post: {...values},
-      userId,
-      path: '/'
-    }
-
     if(type === 'Create'){
       try{
         const newPost = await createPost({
           post: { ...values, picture: uploadedImageUrl},
-          userId,
-          path: '/'
+          userId
         })
 
         if(newPost){
