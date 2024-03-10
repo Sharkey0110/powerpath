@@ -1,3 +1,5 @@
+"use server"
+
 import { CreateTagProps } from "@/types";
 import { connectToDB } from "../database";
 import Tag from "../database/models/tag.model";
