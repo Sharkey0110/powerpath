@@ -5,48 +5,77 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
-import { Input } from "../ui/input";
 import { IPost } from "@/lib/database/models/post.model";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { postFormSchema } from "@/lib/validator";
 import { postDefaultValues } from "@/constants";
-import { DropdownMenu } from "../ui/dropdown-menu";
 import Dropdown from "./Dropdown";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useUploadThing } from "@/lib/uploadthing";
+import { createPost } from "@/lib/actions/post.actions";
+import { FileUploader } from "./FileUploader";
 
 interface PostProps {
   userId: string;
-  type: "Create" | "Edit";
+  type: "Create" | "Update";
   post?: IPost;
   postId?: string;
 }
 
 export default function PostForm({ userId, type, post, postId }: PostProps) {
+  const [files, setFiles] = useState<File[]>([])
   const initialValues =
-    post && type === "Edit"
+    post && type === "Update"
       ? {
           ...post,
         }
       : postDefaultValues;
+  
+  const router = useRouter()
+  const { startUpload } = useUploadThing('imageUploader')
 
-  // 1. Define your form.
   const form = useForm<z.infer<typeof postFormSchema>>({
     resolver: zodResolver(postFormSchema),
     defaultValues: initialValues,
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof postFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof postFormSchema>) {
+    let uploadedImageUrl = values.picture;
+
+    if(files.length > 0) {
+      const uploadedImages = await startUpload(files)
+
+      if(!uploadedImages) {
+        return
+      }
+
+      uploadedImageUrl = uploadedImages[0].url
+    }
+
+    const newPost = {
+      post: {...values},
+      userId,
+      path: '/'
+    }
+
+    if(type === 'Create'){
+      try{
+        const newPost = await createPost({
+          post: { ...values, picture: uploadedImageUrl},
+          userId,
+          path: '/'
+        })
+
+        if(newPost){
+          form.reset();
+          router.push('/')
+        }
+      } catch (error){
+        console.log(error)
+      }
+    }
+
   }
 
   return (
@@ -59,7 +88,11 @@ export default function PostForm({ userId, type, post, postId }: PostProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Textarea placeholder="image will go here" {...field} />
+                  <FileUploader
+                   onFieldChange={field.onChange}
+                   imageUrl={field.value}
+                   setFiles={setFiles}
+                  />
                 </FormControl>
               </FormItem>
             )}
@@ -92,6 +125,16 @@ export default function PostForm({ userId, type, post, postId }: PostProps) {
             )}
           />
         </div>
+
+        <Button
+         type="submit"
+         size='lg'
+         disabled={form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting ? (
+            'Posting...'
+          ): `${type} Post`}
+        </Button>
       </form>
     </Form>
   );

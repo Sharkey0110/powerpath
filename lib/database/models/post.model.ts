@@ -2,7 +2,7 @@ import mongoose, { Document, Schema, model, models } from "mongoose";
 
 export interface IPost extends Document {
   _id: string;
-  authorId: string;
+  author: string;
   parentId?: string;
   text: string;
   picture: string;
@@ -10,7 +10,7 @@ export interface IPost extends Document {
   children?: [
     {
       _id: string;
-      authorId: string;
+      author: string;
       parentId?: string;
       text: string;
       picture: string;
@@ -19,7 +19,7 @@ export interface IPost extends Document {
 }
 
 const postSchema = new Schema({
-  authorId: { type: String, required: true },
+  author: { type: String, required: true },
   parentId: { type: String },
   children: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
   text: { type: String, required: true },

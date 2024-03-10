@@ -22,3 +22,13 @@ export type SearchParamsProps = {
 export type CreateTagProps = {
   tagName: string;
 };
+
+export type CreatePostProps = {
+  userId: string;
+  post: {
+    text: string
+    picture: string;
+    tag?: string;
+  }
+  path: string;
+}
