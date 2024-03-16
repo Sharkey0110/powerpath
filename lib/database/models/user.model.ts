@@ -7,6 +7,7 @@ export interface IUser extends Document{
   firstName: string;
   lastName: string;
   photo: string;
+  onboarded: boolean;
 }
 
 const UserSchema = new Schema({
@@ -15,7 +16,8 @@ const UserSchema = new Schema({
   username: { type: String, required: true, unique: true},
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  photo: { type: String, required: true }
+  photo: { type: String, required: true },
+  onboarded: {type: Boolean, required: true}
 })
 
 const User = models.User || model('User', UserSchema);

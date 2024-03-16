@@ -64,6 +64,7 @@ export async function POST(req: Request) {
       firstName: first_name,
       lastName: last_name,
       photo: "https://utfs.io/f/920e6966-c8e5-4ef0-b183-1643d4969720-1xd4mv.jpeg",
+      onboarded: false
     }
 
     const newUser = await createUser(user);

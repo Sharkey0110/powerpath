@@ -5,6 +5,7 @@ export type CreateUserProps = {
   username: string;
   email: string;
   photo: string;
+  onboarded: boolean;
 };
 
 export type UpdateUserProps = {
@@ -31,4 +32,9 @@ export type CreatePostProps = {
     tag?: string;
     createdAt: number
   }
+}
+
+export type GroupPostProps = {
+  searchBy: string;
+  type: string;
 }

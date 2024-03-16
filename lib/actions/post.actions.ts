@@ -1,6 +1,6 @@
 "use server"
 
-import { CreatePostProps } from "@/types"
+import { CreatePostProps, GroupPostProps } from "@/types"
 import { connectToDB } from "../database"
 import Post from "../database/models/post.model"
 import User from "../database/models/user.model"
@@ -33,5 +33,21 @@ export async function getAllPosts(){
     return JSON.parse(JSON.stringify(posts))
   } catch(error){
     handleError(error);
+  }
+}
+
+export async function getPostsByType({ searchBy, type }: GroupPostProps){
+  try{
+    await connectToDB();
+    if(type === "User"){
+      const posts = await Post.find({author: searchBy})
+      return JSON.parse(JSON.stringify(posts))
+    }
+    else{
+      const posts = await Post.find({tag: searchBy})
+      return JSON.parse(JSON.stringify(posts))
+    }
+  } catch(error){
+    handleError(error)
   }
 }
