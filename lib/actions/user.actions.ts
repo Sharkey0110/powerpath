@@ -11,7 +11,7 @@ export async function createUser(user: CreateUserProps) {
   try {
     await connectToDB();
 
-    const newUser = await User.create({_id: user.clerkId, ...user, onboarded: false});
+    const newUser = await User.create({_id: user.clerkId, ...user, photo: user.photo});
     return JSON.parse(JSON.stringify(newUser));
   } catch (e) {
     handleError(e);
