@@ -24,8 +24,8 @@ export default function Card({ post }: PostProps){
             {post.text}
           </div>
 
-          <Link href={`/profile/${post.author}`}>
-            {post.author}
+          <Link href={`/profile/${post.author._id}`}>
+            {post.author.username}
           </Link>
         </div>
       </div>

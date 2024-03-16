@@ -12,7 +12,7 @@ export default async function ProfilePage({
   const userInfo: IUser = await getUserById(params.id);
   if (!user) return null;
 
-  const isUser = user.id === userInfo.clerkId;
+  const isUser = user.id === userInfo._id;
 
   return (
     <main className="mb-auto flex flex-col justify-center items-center px-4 py-6">

@@ -29,5 +29,6 @@ export type CreatePostProps = {
     text: string
     picture: string;
     tag?: string;
+    createdAt: number
   }
 }

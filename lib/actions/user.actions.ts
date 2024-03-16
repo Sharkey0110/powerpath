@@ -21,7 +21,7 @@ export async function createUser(user: CreateUserProps) {
 export async function deleteUser(clerkId: string) {
   try {
     await connectToDB();
-    const userToDelete = await User.findOne({ clerkId });
+    const userToDelete = await User.findOne({ _id:clerkId });
 
     if (!userToDelete) {
       throw new Error("User not found");
@@ -41,7 +41,7 @@ export async function deleteUser(clerkId: string) {
 export async function updateUser(clerkId: string, user: UpdateUserProps) {
   try {
     await connectToDB();
-    const updatedUser = await User.findByIdAndUpdate({ clerkId }, user, {
+    const updatedUser = await User.findByIdAndUpdate({ _id:clerkId }, user, {
       new: true,
     });
 
@@ -55,7 +55,7 @@ export async function updateUser(clerkId: string, user: UpdateUserProps) {
 export async function getUserById(userId: string) {
   try {
     await connectToDB();
-    return await User.findOne({ clerkId: userId });
+    return await User.findOne({_id: userId});
   } catch (error) {
     handleError(error);
   }

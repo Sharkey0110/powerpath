@@ -56,7 +56,7 @@ export default function PostForm({ userId, type, post, postId }: PostProps) {
     if(type === 'Create'){
       try{
         const newPost = await createPost({
-          post: { ...values, picture: uploadedImageUrl},
+          post: { ...values, picture: uploadedImageUrl, createdAt: Date.now()},
           userId
         })
 
