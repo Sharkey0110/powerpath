@@ -85,6 +85,7 @@ export default function PostForm({ userId, type, post, postId }: PostProps) {
                    onFieldChange={field.onChange}
                    imageUrl={field.value}
                    setFiles={setFiles}
+                   type = "Post"
                   />
                 </FormControl>
               </FormItem>

@@ -11,9 +11,10 @@ type FileUploaderProps = {
   onFieldChange: (url: string) => void
   imageUrl: string
   setFiles: Dispatch<SetStateAction<File[]>>
+  type: "Post" | "Account"
 }
 
-export function FileUploader({ imageUrl, onFieldChange, setFiles }: FileUploaderProps) {
+export function FileUploader({ imageUrl, onFieldChange, setFiles, type }: FileUploaderProps) {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles(acceptedFiles)
     onFieldChange(convertFileToUrl(acceptedFiles[0]))
@@ -27,7 +28,7 @@ export function FileUploader({ imageUrl, onFieldChange, setFiles }: FileUploader
   return (
     <div
       {...getRootProps()}
-      className="justify-center items-center flex h-60 cursor-pointer flex-col overflow-hidden rounded-xl bg-secondary">
+      className={`justify-center items-center cursor-pointer flex-col overflow-hidden flex bg-secondary ${type == "Post" ? "h-60 rounded-xl" : "rounded-full h-60 w-60" } `}>
       <input {...getInputProps()} className="cursor-pointer" />
 
       {imageUrl ? (

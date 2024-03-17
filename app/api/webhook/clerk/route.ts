@@ -63,8 +63,7 @@ export async function POST(req: Request) {
       username: username!,
       firstName: first_name,
       lastName: last_name,
-      photo: "https://utfs.io/f/920e6966-c8e5-4ef0-b183-1643d4969720-1xd4mv.jpeg",
-      onboarded: false
+      photo: "https://utfs.io/f/146efeb1-c969-4271-b6f7-f00a96dfbeca-1xd4mv.jpg",
     }
 
     const newUser = await createUser(user);
@@ -78,21 +77,6 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ message: 'OK', user: newUser })
-  }
-
-  if (eventType === 'user.updated') {
-    const {id, image_url, first_name, last_name, username } = evt.data
-
-    const user = {
-      firstName: first_name,
-      lastName: last_name,
-      username: username!,
-      photo: image_url,
-    }
-
-    const updatedUser = await updateUser(id, user)
-
-    return NextResponse.json({ message: 'OK', user: updatedUser })
   }
 
   if (eventType === 'user.deleted') {

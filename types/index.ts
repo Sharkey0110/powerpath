@@ -5,14 +5,15 @@ export type CreateUserProps = {
   username: string;
   email: string;
   photo: string;
-  onboarded: boolean;
 };
 
 export type UpdateUserProps = {
-  firstName: string;
-  lastName: string;
-  username: string;
-  photo: string;
+  id: string
+  account: {
+    firstName: string;
+    lastName: string;
+    photo: string;
+  }
 };
 
 export type SearchParamsProps = {

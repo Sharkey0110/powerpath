@@ -6,12 +6,13 @@ import User from "../database/models/user.model";
 import { CreateUserProps, UpdateUserProps } from "@/types";
 import { handleError } from "../utils";
 import { revalidatePath } from "next/cache";
+import Post from "../database/models/post.model";
 
 export async function createUser(user: CreateUserProps) {
   try {
     await connectToDB();
 
-    const newUser = await User.create({_id: user.clerkId, ...user, photo: user.photo});
+    const newUser = await User.create({_id: user.clerkId, ...user});
     return JSON.parse(JSON.stringify(newUser));
   } catch (e) {
     handleError(e);
@@ -27,7 +28,13 @@ export async function deleteUser(clerkId: string) {
       throw new Error("User not found");
     }
 
-    //add linked tables once existing
+    await Promise.all([
+      Post.updateMany(
+        {_id: { $in: userToDelete.posts}},
+        { $pull: { author: userToDelete._id}}
+      ),
+      //split and freinds needed later
+    ])
 
     const deletedUser = await User.findByIdAndDelete(userToDelete._id);
     revalidatePath("/");
@@ -38,17 +45,19 @@ export async function deleteUser(clerkId: string) {
   }
 }
 
-export async function updateUser(clerkId: string, user: UpdateUserProps) {
+export async function updateUser({id, account}: UpdateUserProps) {
   try {
     await connectToDB();
-    const updatedUser = await User.findByIdAndUpdate({ _id:clerkId }, user, {
-      new: true,
-    });
+    const userToUpdate = await User.findById(id)
+    if(!userToUpdate || userToUpdate._id !== id) throw new Error ("User not found or unauthorised")
+    const updatedUser = await User.findByIdAndUpdate(
+  id,
+  { ...account}, { new: true}
+  )
 
-    if (!updateUser) throw new Error("User update failed");
-    return JSON.parse(JSON.stringify(updatedUser));
-  } catch (e) {
-    handleError(e);
+  return JSON.parse(JSON.stringify(updatedUser))
+  } catch (error) {
+    handleError(error);
   }
 }
 

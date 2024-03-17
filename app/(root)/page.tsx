@@ -1,16 +1,8 @@
 import Card from "@/components/shared/Card";
 import { getAllPosts } from "@/lib/actions/post.actions";
-import { getUserById } from "@/lib/actions/user.actions";
 import { IPost } from "@/lib/database/models/post.model";
-import { currentUser } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
 
 export default async function Home() {
-  const userId = await currentUser();
-  if(!userId) return null
-  const user = await getUserById(userId.id)
-  //if(!user.onboarded) redirect("/onboarding")
-
   const posts: IPost[] = await getAllPosts();
   return(
     <main className="mb-auto">
