@@ -19,7 +19,9 @@ export default function Card({ post, type }: PostProps){
           <div className="p-4">
             <div className="flex gap-6 text-xs text-slate-500">
               <p>Like</p>
-              <p>Comment</p>
+              <Link href={`/posts/${post._id}`}>
+                <p>Comments</p>
+              </Link>
             </div>
 
             <div className="py-3">

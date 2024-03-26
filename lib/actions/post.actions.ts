@@ -29,9 +29,9 @@ export async function getAllPosts(page: number){
   const limit = 8
   try{
     await connectToDB();
-    const skipAmount = (Number(page) - 1) * limit
+    const skipAmount = (page - 1) * limit
 
-    const posts = await populatePost(Post.find().sort({ createdAt: "desc" }).skip(skipAmount).limit(limit));
+    const posts = await populatePost(Post.find({parentId: {$in: [null, undefined]}}).sort({ createdAt: "desc" }).skip(skipAmount).limit(limit));
     return JSON.parse(JSON.stringify(posts))
   } catch(error){
     handleError(error);
@@ -49,6 +49,16 @@ export async function getPostsByType({ searchBy, type }: GroupPostProps){
       const posts = await Post.find({tag: searchBy})
       return JSON.parse(JSON.stringify(posts))
     }
+  } catch(error){
+    handleError(error)
+  }
+}
+
+export async function getPostById(id: string){
+  try{
+    await connectToDB()
+    const post = await populatePost(Post.find({_id: id}))//.populate({ path: 'children', populate: {path: `author`, model: User, select: "_id username image"}})
+    return JSON.parse(JSON.stringify(post))
   } catch(error){
     handleError(error)
   }

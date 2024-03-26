@@ -29,7 +29,6 @@ export default async function Home({ searchParams }: SearchParamsProps) {
           </div>
         )}
       </div>
-      <LoadMore />
     </main>
   )
 }
