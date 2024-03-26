@@ -13,7 +13,7 @@ export default function Card({ post, type }: PostProps){
       <div>
         <div
         style={{backgroundImage: `url(${post.picture})`}}
-        className={`flex-center flex-grow bg-cover bg-center ${type === "Solo" ? "w-[380px] h-[260px]" : "h-[150px] w-[150px]"}`}
+        className={`flex-center flex-grow bg-cover bg-center ${type === "Solo" ? "w-[380px] h-[300px]" : "h-[150px] w-[150px]"}`}
         />
         {type === "Solo" && (
           <div className="p-4">
@@ -26,8 +26,9 @@ export default function Card({ post, type }: PostProps){
               {post.text}
             </div>
 
-            <Link href={`/profile/${post.author._id}`}>
-              {post.author.username}
+            <Link className="flex gap-1.5" href={`/profile/${post.author._id}`}>
+              <Image className="rounded-full" src={post.author.photo} height={25} width={25} alt="Profile Pic" />
+              <h3>{post.author.username}</h3>
             </Link>
         </div>
         )}

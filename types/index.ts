@@ -39,3 +39,8 @@ export type GroupPostProps = {
   searchBy: string;
   type: string;
 }
+
+export type GetPostProps = {
+  page: number;
+  limit: number;
+}

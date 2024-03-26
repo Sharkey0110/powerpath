@@ -1,11 +1,14 @@
 import Card from "@/components/shared/Card";
+import LoadMore from "@/components/shared/LoadMore";
 import { getAllPosts } from "@/lib/actions/post.actions";
 import { IPost } from "@/lib/database/models/post.model";
+import { SearchParamsProps } from "@/types";
 
-export default async function Home() {
-  const posts: IPost[] = await getAllPosts();
+export default async function Home({ searchParams }: SearchParamsProps) {
+  const page = Number(searchParams?.page) || 1;
+  const posts: IPost[] = await getAllPosts(page);
   return(
-    <main className="mb-auto">
+    <main className="mb-auto text-center">
       <div className=" pt-8 flex flex-col justify-center items-center">
         {posts.length > 0 ? (
           <div>
@@ -26,6 +29,7 @@ export default async function Home() {
           </div>
         )}
       </div>
+      <LoadMore />
     </main>
   )
 }
