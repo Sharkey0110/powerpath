@@ -44,3 +44,8 @@ export type GetPostProps = {
   page: number;
   limit: number;
 }
+
+export type DeletePostParams = {
+  postId: string
+  path: string
+}

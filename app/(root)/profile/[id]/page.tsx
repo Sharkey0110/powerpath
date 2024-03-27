@@ -11,7 +11,6 @@ import Link from "next/link";
 export default async function ProfilePage({params}: {params: { id: string };}) {
   const user = await currentUser();
   const userInfo: IUser = await getUserById(params.id);
-  console.log(userInfo)
   if (!user) return null;
 
   const isUser = user.id === userInfo._id;
