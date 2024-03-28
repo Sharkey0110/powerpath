@@ -11,7 +11,8 @@ export interface IComment extends Document {
 const commentSchema = new Schema({
   author: { type: mongoose.Schema.Types.String, ref: 'User', required: true},
   text: {type: String, required: true},
-  post: { type: mongoose.Schema.Types.ObjectId, ref: "Post", required: true }
+  post: { type: mongoose.Schema.Types.ObjectId, ref: "Post", required: true },
+  createdAt: { type: Number, required: true }
 })
 
 const Comment = models.Comment || model("Comment", commentSchema);

@@ -42,7 +42,16 @@ export default function Card({ post, type }: PostProps){
             </div>
 
             <Link className="flex gap-1.5" href={`/profile/${post.author._id}`}>
-              <Image className="rounded-full" src={post.author.photo} height={25} width={25} alt="Profile Pic" />
+              <div style={{ width: '30px', height: '30px', borderRadius: '50%', overflow: 'hidden' }}>
+                <Image 
+                  src={post.author.photo} 
+                  alt="Profile pic" 
+                  width={30} 
+                  height={30} 
+                  className="rounded-full"
+                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                />
+              </div>
               <h3>{post.author.username}</h3>
             </Link>
         </div>

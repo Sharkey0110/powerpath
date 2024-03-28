@@ -2,6 +2,7 @@
 
 import Card from "@/components/shared/Card"
 import CommentForm from "@/components/shared/CommentForm"
+import { getCommentsOfPost } from "@/lib/actions/comment.actions";
 import { getPostById } from "@/lib/actions/post.actions"
 import { currentUser } from "@clerk/nextjs";
 
@@ -10,6 +11,7 @@ export default async function postDetailPage({ params }: { params: { id: string}
   if(!user) return null
 
   const post = await getPostById(params.id)
+  const comments = await getCommentsOfPost(params.id)
 
   return(
     <section className="flex flex-col justify-center items-center">
@@ -24,7 +26,9 @@ export default async function postDetailPage({ params }: { params: { id: string}
       </div>
 
       <div>
-        <p>This is where you will see comments</p>
+        {comments.map((comment) => (
+          <p>{comment.text}</p>
+        ))}
       </div>
     </section>
   )

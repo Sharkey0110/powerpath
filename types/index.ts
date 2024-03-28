@@ -53,8 +53,8 @@ export type DeletePostParams = {
 export type CreateCommentProps = {
   userId: string;
   postId: string;
-  createdAt: number;
   comment: {
     text: string
+    createdAt: number;
   }
 }

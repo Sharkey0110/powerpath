@@ -5,15 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
-import { IComment } from "@/lib/database/models/comment.model";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { commentFormSchema } from "@/lib/validator";
 import { commentDefaultValues } from "@/constants";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useUploadThing } from "@/lib/uploadthing";
-import { createPost } from "@/lib/actions/post.actions";
-import { FileUploader } from "./FileUploader";
 import { createComment } from "@/lib/actions/comment.actions";
 
 interface CommentProps{
@@ -35,8 +30,7 @@ export default function CommentForm({ userId, postId }: CommentProps){
       const newComment = await createComment({
         userId,
         postId,
-        createdAt: Date.now(),
-        comment: { ...values }
+        comment: { ...values, createdAt: Date.now(), }
       }
       )
 
