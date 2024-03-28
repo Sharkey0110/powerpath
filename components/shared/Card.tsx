@@ -12,15 +12,17 @@ interface PostProps{
 export default function Card({ post, type }: PostProps){
   const { sessionClaims } = auth()
   const userId = sessionClaims?.userId as string;
-  const isUser = userId === post.author._id.toString();
+  const isUser = userId === post.author._id;
 
   return(
     <div className={`flex flex-col overflow-hidden rounded-lg bg-primary ${type === "Solo" ? "h-[420px] w-[380px]" : "h-[150px] w-[150px]"}`}>
       <div>
-        <div
-        style={{backgroundImage: `url(${post.picture})`}}
-        className={`flex-center flex-grow bg-cover bg-center ${type === "Solo" ? "w-[380px] h-[300px]" : "h-[150px] w-[150px]"}`}
-        />
+        <Link href={`/posts/${post._id}`}>
+          <div
+          style={{backgroundImage: `url(${post.picture})`}}
+          className={`flex-center flex-grow bg-cover bg-center ${type === "Solo" ? "w-[380px] h-[300px]" : "h-[150px] w-[150px]"}`}
+          />
+        </Link>
         {type === "Solo" && (
           <div className="p-4 relative">
             {isUser && (
@@ -28,8 +30,8 @@ export default function Card({ post, type }: PostProps){
                   <DeleteConfirm postId={post._id} />
               </div>
             )}
-            <div className="flex gap-6 text-xs text-slate-500">
-              <p>Like</p>
+            <div className="flex gap-6 text-xs">
+              <p>Likes</p>
               <Link href={`/posts/${post._id}`}>
                 <p>Comments</p>
               </Link>

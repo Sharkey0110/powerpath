@@ -1,9 +1,13 @@
 
 
 import Card from "@/components/shared/Card"
+import CommentForm from "@/components/shared/CommentForm"
 import { getPostById } from "@/lib/actions/post.actions"
+import { currentUser } from "@clerk/nextjs";
 
 export default async function postDetailPage({ params }: { params: { id: string}}){
+  const user = await currentUser();
+  if(!user) return null
 
   const post = await getPostById(params.id)
 
@@ -16,10 +20,11 @@ export default async function postDetailPage({ params }: { params: { id: string}
       </div>
 
       <div>
-        <p>This is where you will add a comment</p>
+        <CommentForm postId={params.id} userId={user.id} />
       </div>
+
       <div>
-        This is where comments will be
+        <p>This is where you will see comments</p>
       </div>
     </section>
   )

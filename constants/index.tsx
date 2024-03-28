@@ -25,3 +25,7 @@ export const postDefaultValues = {
   picture: "",
   text: "",
 };
+
+export const commentDefaultValues = {
+  text: "",
+}

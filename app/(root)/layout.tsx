@@ -1,4 +1,5 @@
-import { BottomBar, Topbar } from "@/components/shared";
+import BottomBar from "@/components/shared/BottomBar";
+import Topbar from "@/components/shared/TopBar";
 import { auth } from "@clerk/nextjs";
 
 export default function RootLayout({ children }: { children: React.ReactNode}){

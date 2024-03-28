@@ -49,3 +49,12 @@ export type DeletePostParams = {
   postId: string
   path: string
 }
+
+export type CreateCommentProps = {
+  userId: string;
+  postId: string;
+  createdAt: number;
+  comment: {
+    text: string
+  }
+}

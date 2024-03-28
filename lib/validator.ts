@@ -11,3 +11,7 @@ export const accountFormSchema = z.object({
   lastName: z.string().max(20, "Too long"),
   photo: z.string()
 })
+
+export const commentFormSchema = z.object({
+  text: z.string().max(64, "comment too long")
+})

@@ -50,9 +50,7 @@ export async function updateUser({id, account}: UpdateUserProps) {
     await connectToDB();
     const userToUpdate = await User.findById(id)
     if(!userToUpdate || userToUpdate._id !== id) throw new Error ("User not found or unauthorised")
-    const updatedUser = await User.findByIdAndUpdate(
-  id,
-  { ...account}, { new: true}
+    const updatedUser = await User.findByIdAndUpdate(id,{ ...account}, { new: true}
   )
 
   return JSON.parse(JSON.stringify(updatedUser))
