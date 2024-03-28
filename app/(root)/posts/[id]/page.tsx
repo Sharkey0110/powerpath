@@ -4,6 +4,7 @@ import Card from "@/components/shared/Card"
 import CommentForm from "@/components/shared/CommentForm"
 import { getCommentsOfPost } from "@/lib/actions/comment.actions";
 import { getPostById } from "@/lib/actions/post.actions"
+import { IComment } from "@/lib/database/models/comment.model";
 import { currentUser } from "@clerk/nextjs";
 
 export default async function postDetailPage({ params }: { params: { id: string}}){
@@ -26,7 +27,7 @@ export default async function postDetailPage({ params }: { params: { id: string}
       </div>
 
       <div>
-        {comments.map((comment) => (
+        {comments.map((comment: IComment) => (
           <p>{comment.text}</p>
         ))}
       </div>
