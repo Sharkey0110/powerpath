@@ -7,6 +7,7 @@ import User from "../database/models/user.model"
 import { handleError } from "../utils"
 import Tag from "../database/models/tag.model"
 import { revalidatePath } from 'next/cache'
+import Comment from "../database/models/comment.model"
 
 function populatePost(query: any){
   return query
@@ -65,13 +66,15 @@ export async function getPostById(id: string){
   }
 }
 
-export async function deletePost({ postId, path}: DeletePostParams){
+export async function deletePost({ id, path}: DeletePostParams){
   try{
     await connectToDB()
 
-    const deletedPost = await Post.findByIdAndDelete(postId)
+    const deletedPost = await Post.findByIdAndDelete(id)
     if (deletedPost) revalidatePath(path)
   } catch (error){
     handleError(error)
   }
+
+  await Comment.deleteMany({post: id})
 }

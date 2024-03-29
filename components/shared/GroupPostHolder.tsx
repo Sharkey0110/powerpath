@@ -15,7 +15,7 @@ export default async function GroupPostHolder({searchBy, type}: GroupPostProps){
           {posts.map((post) => {
             return (
               <li key={post._id}>
-                <Card post={post} type="Grid" />
+                <Card post={post} type="Simple" size="h-[150px] w-[150px]" />
               </li>
             )
           })}

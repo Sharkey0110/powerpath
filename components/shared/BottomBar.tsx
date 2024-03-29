@@ -11,7 +11,7 @@ export default function BottomBar(){
   const { userId } = useAuth();
 
   return(
-    <nav className="px-8 py-2 flex justify-between items-center bg-primary sticky bottom-0">
+    <nav className="z-10 px-8 py-2 flex justify-between items-center bg-primary sticky bottom-0">
       {navItems.map((item) => {
         const isActive =
         (pathname.includes(item.route) && item.route.length > 1) ||

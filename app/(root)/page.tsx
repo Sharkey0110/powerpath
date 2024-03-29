@@ -16,7 +16,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
               {posts.map((post) => {
                 return (
                   <li className="mb-12" key={post._id}>
-                    <Card post={post} type="Solo" />
+                    <Card post={post} type="Detailed" />
                   </li>
                 )
               })}

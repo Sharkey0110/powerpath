@@ -1,6 +1,6 @@
 "use server"
 
-import { CreateCommentProps } from "@/types"
+import { CreateCommentProps, DeletePostParams } from "@/types"
 import { connectToDB } from "../database"
 import Comment from "../database/models/comment.model"
 import User from "../database/models/user.model"
@@ -27,9 +27,19 @@ export async function getCommentsOfPost(postId: string){
     connectToDB()
     const post = await Post.findOne({ _id: postId });
     if(!post) throw new Error ("Post not found");
-    const comments = await Comment.find({ post: postId })
+    const comments = await Comment.find({ post: postId }).populate({ path: 'author', model: User, select: '_id username photo' }).sort({ createdAt: "desc" })
     return JSON.parse(JSON.stringify(comments))
   } catch(error){
+    handleError(error)
+  }
+}
+
+export async function deleteComment({ id, path }: DeletePostParams){
+  try{
+    connectToDB()
+    const deletedComment = await Comment.findByIdAndDelete(id)
+    if(deletedComment) revalidatePath(path)
+  } catch (error){
     handleError(error)
   }
 }

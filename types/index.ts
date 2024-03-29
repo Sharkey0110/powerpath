@@ -46,7 +46,7 @@ export type GetPostProps = {
 }
 
 export type DeletePostParams = {
-  postId: string
+  id: string
   path: string
 }
 
