@@ -28,7 +28,7 @@ export default function LoadMore(){
         {posts.map((post) => {
           return (
             <li className="mb-12" key={post._id}>
-              <Card post={post} type="Solo" />
+              <Card post={post} type="Simple" />
             </li>
           )
         })}
