@@ -15,6 +15,10 @@ function populatePost(query: any){
     .populate({ path: 'tag', model: Tag, select: '_id tagName' })
 }
 
+async function getTagByName(name: string){
+  return Tag.findOne({tagName: { $regex: name, $options: 'i'}})
+}
+
 export async function createPost({ userId, post}: CreatePostProps){
   try{
     await connectToDB()
@@ -27,30 +31,44 @@ export async function createPost({ userId, post}: CreatePostProps){
   }
 }
 
-export async function getAllPosts(page: number){
+export async function getAllPosts({ page, query }: GetPostProps){
   const limit = 8
   try{
     await connectToDB();
+
+    const textCondition = query ? { text: { $regex: query, $options: 'i' } } : {};
+    const tagCondition = query ? await getTagByName(query) : null;
+    
+    let conditions = {};
+    
+    if (textCondition && tagCondition) {
+      conditions = {
+        $or: [
+          { textCondition },
+          { tag: tagCondition._id }
+        ]
+      };
+    } else if (textCondition) {
+      conditions = textCondition;
+    } else if (tagCondition) {
+      conditions = { tag: tagCondition._id };
+    }
+
     const skipAmount = (page - 1) * limit
 
-    const posts = await populatePost(Post.find({parentId: {$in: [null, undefined]}}).sort({ createdAt: "desc" }).skip(skipAmount).limit(limit));
+    const posts = await populatePost(Post.find(conditions).sort({ createdAt: "desc" }).skip(skipAmount).limit(limit));
     return JSON.parse(JSON.stringify(posts))
   } catch(error){
     handleError(error);
   }
 }
 
-export async function getPostsByType({ searchBy, type }: GroupPostProps){
+export async function getPostsByUser(searchBy : string){
   try{
     await connectToDB();
-    if(type === "User"){
-      const posts = await Post.find({author: searchBy})
-      return JSON.parse(JSON.stringify(posts))
-    }
-    else{
-      const posts = await Post.find({tag: searchBy})
-      return JSON.parse(JSON.stringify(posts))
-    }
+    const posts = await Post.find({author: searchBy})
+    return JSON.parse(JSON.stringify(posts))
+    
   } catch(error){
     handleError(error)
   }

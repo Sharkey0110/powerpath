@@ -3,7 +3,7 @@
 import { connectToDB } from "../database";
 import User from "../database/models/user.model";
 
-import { CreateUserProps, UpdateUserProps } from "@/types";
+import { CreateUserProps, GetAccountParams, UpdateUserProps } from "@/types";
 import { handleError } from "../utils";
 import { revalidatePath } from "next/cache";
 import Post from "../database/models/post.model";
@@ -65,5 +65,23 @@ export async function getUserById(userId: string) {
     return await User.findOne({_id: userId});
   } catch (error) {
     handleError(error);
+  }
+}
+
+export async function getAccounts({userId, query}: GetAccountParams){
+  try{
+    await connectToDB()
+    const limit = 5;
+    const condition = query ? { 
+      $and: [
+          { username: { $regex: query, $options: 'i' } },
+          { _id: { $ne: userId } }
+      ]
+    } : { _id: { $ne: userId } };
+  
+    const accounts = await User.find(condition).limit(limit);
+    return JSON.parse(JSON.stringify(accounts))
+  } catch(error){
+    handleError(error)
   }
 }

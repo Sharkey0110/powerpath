@@ -6,7 +6,7 @@ import { SearchParamsProps } from "@/types";
 
 export default async function Home({ searchParams }: SearchParamsProps) {
   const page = Number(searchParams?.page) || 1;
-  const posts: IPost[] = await getAllPosts(page);
+  const posts: IPost[] = await getAllPosts({page});
   return(
     <main className="mb-auto text-center">
       <div className=" pt-8 flex flex-col justify-center items-center">

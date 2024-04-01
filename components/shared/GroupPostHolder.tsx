@@ -1,11 +1,8 @@
-import { getPostsByType } from "@/lib/actions/post.actions";
 import { IPost } from "@/lib/database/models/post.model";
-import { GroupPostProps } from "@/types";
 import Card from "./Card";
 
 
-export default async function GroupPostHolder({searchBy, type}: GroupPostProps){
-  const posts: IPost[] = await getPostsByType({searchBy, type})
+export default async function GroupPostHolder({posts}: {posts: IPost[]}){
 
   return(
     <section >
@@ -15,7 +12,7 @@ export default async function GroupPostHolder({searchBy, type}: GroupPostProps){
           {posts.map((post) => {
             return (
               <li key={post._id}>
-                <Card post={post} type="Simple" size="h-[150px] w-[150px]" />
+                <Card post={post} type="Simple" size="h-[142px] w-[142px]" />
               </li>
             )
           })}

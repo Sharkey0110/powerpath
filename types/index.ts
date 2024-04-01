@@ -37,12 +37,11 @@ export type CreatePostProps = {
 
 export type GroupPostProps = {
   searchBy: string;
-  type: string;
 }
 
 export type GetPostProps = {
   page: number;
-  limit: number;
+  query?: string;
 }
 
 export type DeletePostParams = {
@@ -57,4 +56,20 @@ export type CreateCommentProps = {
     text: string
     createdAt: number;
   }
+}
+
+export type UrlQueryParams = {
+  params: string
+  key: string
+  value: string | null
+}
+
+export type RemoveUrlQueryParams = {
+  params: string
+  keysToRemove: string[]
+}
+
+export type GetAccountParams = {
+  userId: string;
+  query?: string;
 }

@@ -1,7 +1,9 @@
 import DeleteButton from "@/components/shared/DeleteButton";
 import GroupPostHolder from "@/components/shared/GroupPostHolder";
 import { Button } from "@/components/ui/button";
+import { getPostsByUser } from "@/lib/actions/post.actions";
 import { getUserById } from "@/lib/actions/user.actions";
+import { IPost } from "@/lib/database/models/post.model";
 import { IUser } from "@/lib/database/models/user.model";
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
@@ -11,12 +13,13 @@ import Link from "next/link";
 export default async function ProfilePage({params}: {params: { id: string };}) {
   const user = await currentUser();
   const userInfo: IUser = await getUserById(params.id);
+  const posts: IPost[] = await getPostsByUser(params.id)
   if (!user) return null;
 
   const isUser = user.id === userInfo._id;
 
   return (
-    <main className="mb-auto flex flex-col justify-center items-center px-4 py-6 text-center">
+    <main className="mb-auto flex flex-col justify-center items-center py-6 text-center">
       <section className="flex flex-col justify-center items-center">
         <div style={{ width: '120px', height: '120px', borderRadius: '50%', overflow: 'hidden' }}>
           <Image 
@@ -56,7 +59,7 @@ export default async function ProfilePage({params}: {params: { id: string };}) {
 
       <section>
         <h1>Posts</h1>
-        <GroupPostHolder searchBy={userInfo._id} type="User" />
+        <GroupPostHolder posts={posts} />
       </section>
     </main>
   );
