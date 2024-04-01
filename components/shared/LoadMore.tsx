@@ -14,7 +14,7 @@ export default function LoadMore(){
 
   useEffect(()=> {
     if(inView){
-      getAllPosts(nextPage)
+      getAllPosts({ page: nextPage })
       .then((res) => {
         setPosts([...posts, ...res])
         nextPage++;
