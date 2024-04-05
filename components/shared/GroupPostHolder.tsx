@@ -8,7 +8,7 @@ export default async function GroupPostHolder({posts}: {posts: IPost[]}){
     <section >
       {posts.length > 0 ? (
         <div>
-        <ul className="pt-8 grid grid-cols-3">
+        <ul className="grid grid-cols-3">
           {posts.map((post) => {
             return (
               <li key={post._id}>

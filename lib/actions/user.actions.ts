@@ -71,7 +71,7 @@ export async function getUserById(userId: string) {
 export async function getAccounts({userId, query}: GetAccountParams){
   try{
     await connectToDB()
-    const limit = 5;
+    const limit = 3;
     const condition = query ? { 
       $and: [
           { username: { $regex: query, $options: 'i' } },

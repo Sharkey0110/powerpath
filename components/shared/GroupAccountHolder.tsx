@@ -3,10 +3,10 @@ import UserCard from "./UserCard";
 
 export default function GroupAccountHolder({accounts}: {accounts: IUser[]}){
   return(
-    <section >
+    <section className="flex flex-col justify-center items-center bg-secondary rounded-xl" >
       {accounts.length > 0 ? (
         <div>
-        <ul className="pt-8 grid grid-cols-3">
+        <ul className="flex flex-col justify-center items-center gap-1">
           {accounts.map((account) => {
             return (
               <li key={account._id}>

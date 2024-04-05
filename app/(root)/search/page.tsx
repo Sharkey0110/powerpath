@@ -30,11 +30,13 @@ export default async function SearchPage({ searchParams }: SearchParamsProps){
         <SearchBar />
       </section>
 
-      <section className="pt-6">
+      <section>
+        <h2 className="pl-2">Accounts</h2>
         <GroupAccountHolder accounts={accounts} />
       </section>
 
-      <section className="px-2">
+      <section>
+        <h2 className="pl-2">Posts</h2>
         <GroupPostHolder posts={posts} />
       </section>
     </main>
