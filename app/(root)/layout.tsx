@@ -1,14 +1,14 @@
 import BottomBar from "@/components/shared/BottomBar";
 import Topbar from "@/components/shared/TopBar";
-import { auth } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 
-export default function RootLayout({ children }: { children: React.ReactNode}){
-  const { sessionClaims } = auth()
+export default async function RootLayout({ children }: { children: React.ReactNode}){
+  const user = await currentUser();
   return(
       <div className="flex flex-col justify-between h-screen">
         <Topbar />
         {children}
-        <BottomBar />
+        <BottomBar userId={user!.id} />
       </div>
   )
 }
