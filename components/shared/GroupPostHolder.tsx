@@ -12,7 +12,7 @@ export default async function GroupPostHolder({posts}: {posts: IPost[]}){
           {posts.map((post) => {
             return (
               <li key={post._id}>
-                <Card post={post} type="Simple" size="h-[142px] w-[142px] md:h-[220px] md:w-[220px]" />
+                <Card post={post} type="Simple" size="h-[142px] w-[142px] md:h-[220px] md:w-[220px]" showDelete={true} />
               </li>
             )
           })}

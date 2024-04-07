@@ -18,11 +18,9 @@ import { FileUploader } from "./FileUploader";
 
 interface PostProps {
   userId: string;
-  post?: IPost;
-  postId?: string;
 }
 
-export default function PostForm({ userId, post }: PostProps) {
+export default function PostForm({ userId }: PostProps) {
   const [files, setFiles] = useState<File[]>([])
   const initialValues = postDefaultValues;
   

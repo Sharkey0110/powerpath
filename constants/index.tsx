@@ -29,3 +29,14 @@ export const postDefaultValues = {
 export const commentDefaultValues = {
   text: "",
 }
+
+export const splitDefaultValues = {
+  title: "",
+  monday: [],
+  tuesday: [],
+  wednesday: [],
+  thursday: [],
+  friday: [],
+  saturday: [],
+  sunday: []
+}

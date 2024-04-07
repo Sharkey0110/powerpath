@@ -32,7 +32,7 @@ export async function createPost({ userId, post}: CreatePostProps){
 }
 
 export async function getAllPosts({ page, query }: GetPostProps){
-  const limit = 8
+  const limit = 9
   try{
     await connectToDB();
 
@@ -64,9 +64,10 @@ export async function getAllPosts({ page, query }: GetPostProps){
 }
 
 export async function getPostsByUser(searchBy : string){
+  const limit = 9
   try{
     await connectToDB();
-    const posts = await Post.find({author: searchBy})
+    const posts = await Post.find({author: searchBy}).populate({ path: 'author', model: User, select: '_id username photo' }).sort({ createdAt: "desc" })
     return JSON.parse(JSON.stringify(posts))
     
   } catch(error){

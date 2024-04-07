@@ -24,7 +24,7 @@ export default async function postDetailPage({ params }: { params: { id: string}
     <section className="flex flex-col items-center justify-center gap-5">
       <div>
         <ul>
-          <Card post = {post[0]} type="Simple" size="h-[360px] w-[360px]" />
+          <Card post = {post[0]} type="Simple" size="h-[360px] w-[360px]" showDelete={false} />
         </ul>
       </div>
 

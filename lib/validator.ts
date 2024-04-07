@@ -15,3 +15,10 @@ export const accountFormSchema = z.object({
 export const commentFormSchema = z.object({
   text: z.string().max(64, "comment too long")
 })
+
+export const splitFormSchema = z.object({
+  title: z.string().max(64, "Too long"),
+  temp1: z.string(),
+  temp2: z.string(),
+  temp3: z.string()
+})

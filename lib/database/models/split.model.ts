@@ -4,20 +4,48 @@ export interface ISplit extends Document {
   _id: string,
   title: string;
   creator: { _id: string, name: string}
-  monday: any[];
-  tuesday: any[];
-  wednesday: any[];
-  thursday: any[];
-  friday: any[];
-  saturday: any[];
-  sunday: any[];
+  monday: [{
+    exercise: string;
+    sets: number;
+    reps: number;
+  }];
+  tuesday: [{
+    exercise: string
+    sets: number;
+    reps: number
+  }];
+  wednesday: [{
+    exercise: string
+    sets: number;
+    reps: number
+  }];
+  thursday: [{
+    exercise: string
+    sets: number;
+    reps: number
+  }];
+  friday: [{
+    exercise: string
+    sets: number;
+    reps: number
+  }];
+  saturday: [{
+    exercise: string
+    sets: number;
+    reps: number
+  }];
+  sunday: [{
+    exercise: string
+    sets: number;
+    reps: number
+  }];
   tag: { _id: string, name: string }
 }
 
 
 const SplitSchema = new Schema({
   title: { type: String, required: true },
-  creator: { type: Schema.Types.ObjectId, ref: 'User' },
+  creator: { type: Schema.Types.String, ref: 'User', required: true },
   monday: { type: Array},
   tuesday: { type: Array},
   wednesday: { type: Array },
@@ -25,7 +53,7 @@ const SplitSchema = new Schema({
   friday: { type: Array },
   saturday: { type: Array },
   sunday: { type: Array },
-  tag: { type: Schema.Types.ObjectId, ref: 'Tag'},
+  tag: { type: Schema.Types.ObjectId, ref: 'Tag', required: true},
 })
 
 const Split = models.Split || model('Split', SplitSchema)

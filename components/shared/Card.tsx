@@ -8,9 +8,10 @@ interface PostProps{
   post: IPost;
   type: "Detailed" | "Simple";
   size?: string
+  showDelete: boolean
 }
 
-export default function Card({ post, type, size }: PostProps){
+export default function Card({ post, type, size, showDelete }: PostProps){
   const { sessionClaims } = auth()
   const userId = sessionClaims?.userId as string;
   const isUser = userId === post.author._id;
@@ -19,7 +20,7 @@ export default function Card({ post, type, size }: PostProps){
     <div className={`flex flex-col overflow-hidden rounded-lg bg-primary ${type === "Detailed" ? "h-[420px] w-[380px]" : `${size}`}`}>
       <div>
         <div className="relative">
-          {isUser && type === "Detailed" && (
+          {isUser && showDelete === true && (
             <div className="absolute right-1 top-2 flex flex-col gap-4 rounded-xl bg-[#472e53] p-2 shadow-sm transition-all">
               <DeleteConfirm id={post._id} type="Post" />
             </div>
