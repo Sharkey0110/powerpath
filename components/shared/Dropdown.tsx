@@ -51,12 +51,12 @@ export default function Dropdown({ value, onChangeHandler }: DropdownProps){
 
   return (
     <Select onValueChange={onChangeHandler} defaultValue={value}>
-      <SelectTrigger className="bg-secondary border-none focus-visible:ring-0">
+      <SelectTrigger className="bg-secondary border-none focus-visible:ring-0 md:text-lg">
         <SelectValue placeholder="Tag" />
       </SelectTrigger>
       <SelectContent>
         {tags.length > 0 && tags.map((tag) => (
-          <SelectItem key={tag._id} value={tag._id} className="text-md font-semibold">
+          <SelectItem key={tag._id} value={tag._id} className="text-md font-semibold md:text-lg">
             {tag.tagName}
           </SelectItem>
         ))}

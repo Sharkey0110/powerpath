@@ -8,11 +8,11 @@ export default async function GroupPostHolder({posts}: {posts: IPost[]}){
     <section >
       {posts.length > 0 ? (
         <div>
-        <ul className="grid grid-cols-3">
+        <ul className="grid grid-cols-3 md:gap-6">
           {posts.map((post) => {
             return (
               <li key={post._id}>
-                <Card post={post} type="Simple" size="h-[142px] w-[142px]" />
+                <Card post={post} type="Simple" size="h-[142px] w-[142px] md:h-[220px] md:w-[220px]" />
               </li>
             )
           })}

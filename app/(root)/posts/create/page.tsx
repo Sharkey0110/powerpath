@@ -12,7 +12,7 @@ export default async function CreatePostPage() {
         <h1 className="text-2xl text-center">Creating a Post</h1>
       </div>
       <div className="pt-12">
-        <PostForm userId={user.id} type="Create" />
+        <PostForm userId={user.id} />
       </div>
     </main>
   );

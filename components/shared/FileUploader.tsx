@@ -28,7 +28,7 @@ export function FileUploader({ imageUrl, onFieldChange, setFiles, type }: FileUp
   return (
     <div
       {...getRootProps()}
-      className={`justify-center items-center cursor-pointer flex-col overflow-hidden flex bg-secondary ${type == "Post" ? "h-60 rounded-xl" : "rounded-full h-60 w-60" } `}>
+      className={`justify-center items-center cursor-pointer flex-col overflow-hidden flex bg-secondary ${type == "Post" ? "h-60 md:h-80 rounded-xl" : "rounded-full h-60 w-60" } `}>
       <input {...getInputProps()} className="cursor-pointer" />
 
       {imageUrl ? (

@@ -8,7 +8,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
   const page = Number(searchParams?.page) || 1;
   const posts: IPost[] = await getAllPosts({page});
   return(
-    <main className="mb-auto text-center">
+    <main className="mb-auto text-center justify-center">
       <div className=" pt-8 flex flex-col justify-center items-center">
         {posts.length > 0 ? (
           <div>
