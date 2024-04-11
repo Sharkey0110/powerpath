@@ -1,5 +1,5 @@
+"use client"
 import { IPost } from "@/lib/database/models/post.model";
-import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteConfirm from "./DeleteConfirm";
@@ -9,13 +9,11 @@ interface PostProps{
   type: "Detailed" | "Simple";
   size?: string
   showDelete: boolean
+  userId: string;
 }
 
-export default function Card({ post, type, size, showDelete }: PostProps){
-  const { sessionClaims } = auth()
-  const userId = sessionClaims?.userId as string;
+export default function Card({ post, type, size, showDelete, userId }: PostProps){
   const isUser = userId === post.author._id;
-
   return(
     <div className={`flex flex-col overflow-hidden rounded-lg bg-primary ${type === "Detailed" ? "h-[420px] w-[380px]" : `${size}`}`}>
       <div>

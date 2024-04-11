@@ -3,24 +3,29 @@ import LoadMore from "@/components/shared/LoadMore";
 import { getAllPosts } from "@/lib/actions/post.actions";
 import { IPost } from "@/lib/database/models/post.model";
 import { SearchParamsProps } from "@/types";
+import { auth } from "@clerk/nextjs";
 
 export default async function Home({ searchParams }: SearchParamsProps) {
-  const page = Number(searchParams?.page) || 1;
-  const posts: IPost[] = await getAllPosts({page});
+  const { sessionClaims } = auth()
+  const userId = sessionClaims?.userId as string;
+  const posts = await getAllPosts({page: 1});
+
+
   return(
     <main className="mb-auto text-center justify-center">
       <div className=" pt-8 flex flex-col justify-center items-center">
-        {posts.length > 0 ? (
+        {posts?.length > 0 ? (
           <div>
-            <ul>
-              {posts.map((post) => {
+            <section>
+              {posts.map((post: IPost) => {
                 return (
-                  <li className="mb-12" key={post._id}>
-                    <Card post={post} type="Detailed" showDelete = {true} />
-                  </li>
+                  <div className="mb-12" key={post._id}>
+                    <Card post={post} type="Detailed" showDelete = {true} userId={userId} />
+                  </div>
                 )
               })}
-            </ul>
+            </section>
+            <LoadMore userId={userId} type="Detailed" fetch="All" />
           </div>
         ) : (
           <div>

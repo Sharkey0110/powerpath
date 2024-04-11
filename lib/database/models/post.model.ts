@@ -1,12 +1,12 @@
 import mongoose, { Document, Schema, model, models } from "mongoose";
 
 export interface IPost extends Document {
-  _id: string;
-  author: {_id: string, username: string, photo: string};
-  text: string;
-  picture: string;
-  createdAt: number;
-  tag?: {_id: string, tagName: string};
+    _id: string;
+    author: {_id: string, username: string, photo: string};
+    text: string;
+    picture: string;
+    createdAt: number;
+    tag?: {_id: string, tagName: string};
 }
 
 const postSchema = new Schema({

@@ -15,7 +15,7 @@ import Link from "next/link";
 export default async function ProfilePage({params}: {params: { id: string };}) {
   const user = await currentUser();
   const userInfo: IUser = await getUserById(params.id);
-  const posts: IPost[] = await getPostsByUser(params.id)
+  const posts: IPost[] = await getPostsByUser({searchBy: params.id, page : 1})
   const split: ISplit = await getSplitByUser(params.id)
   if (!user) return null;
 
@@ -71,7 +71,7 @@ export default async function ProfilePage({params}: {params: { id: string };}) {
 
       <section>
         <h1>Posts</h1>
-        <GroupPostHolder posts={posts} />
+        <GroupPostHolder posts={posts} userId={user.id} fetch="User" />
       </section>
     </main>
   );

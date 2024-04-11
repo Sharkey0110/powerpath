@@ -65,7 +65,7 @@ export default function PostForm({ userId }: PostProps) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-col md:gap-20">
-          <div className="xs:flex xs:flex-col md:grid md:grid-cols-2 justify-center items-center gap-8 px-10">
+          <div className="xs:flex xs:flex-col md:grid md:grid-cols-2 gap-8 justify-center items-center px-10">
             <FormField
               control={form.control}
               name="picture"
@@ -83,7 +83,7 @@ export default function PostForm({ userId }: PostProps) {
               )}
             />
 
-            <div className="flex flex-col md:gap-32">
+            <div className=" pt-4 gap-4 flex flex-col md:gap-32">
               <FormField
                 control={form.control}
                 name="text"
@@ -116,7 +116,7 @@ export default function PostForm({ userId }: PostProps) {
             type="submit"
             size='lg'
             disabled={form.formState.isSubmitting}
-            className="rounded-xl max-w-[400px] mx-auto mb-5"
+            className="rounded-xl max-w-[400px] mx-auto mb-5 mt-4"
             >
               {form.formState.isSubmitting ? (
                 'Posting...'

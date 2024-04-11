@@ -57,17 +57,19 @@ export async function getAllPosts({ page, query }: GetPostProps){
     const skipAmount = (page - 1) * limit
 
     const posts = await populatePost(Post.find(conditions).sort({ createdAt: "desc" }).skip(skipAmount).limit(limit));
+    const postCount = await Post.countDocuments(conditions)
     return JSON.parse(JSON.stringify(posts))
   } catch(error){
     handleError(error);
   }
 }
 
-export async function getPostsByUser(searchBy : string){
+export async function getPostsByUser({searchBy, page} : {searchBy: string, page: number}){
   const limit = 9
   try{
     await connectToDB();
-    const posts = await Post.find({author: searchBy}).populate({ path: 'author', model: User, select: '_id username photo' }).sort({ createdAt: "desc" })
+    const skipAmount = (page - 1) * limit
+    const posts = await Post.find({author: searchBy}).populate({ path: 'author', model: User, select: '_id username photo' }).sort({ createdAt: "desc" }).limit(limit).skip(skipAmount)
     return JSON.parse(JSON.stringify(posts))
     
   } catch(error){
