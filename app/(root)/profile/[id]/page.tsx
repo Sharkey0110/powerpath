@@ -39,7 +39,7 @@ export default async function ProfilePage({params}: {params: { id: string };}) {
           <p>{userInfo.firstName}</p>
           <p>{userInfo.lastName}</p>
         </div>
-        {isUser ? (
+        {isUser && (
           <div className="flex gap-5">
             <Link href={`/profile/${params.id}/edit`}>
             <Button className="w-[180px] rounded-lg">
@@ -49,14 +49,10 @@ export default async function ProfilePage({params}: {params: { id: string };}) {
 
           <DeleteButton id= {userInfo._id} />
           </div>
-        ) : (
-          <Button>
-            Follow
-          </Button>
         )}
       </section>
 
-      <section className="py-10">
+      <section className="py-8">
         <h2 className="text-xl font-semibold pb-5">Split</h2>
         {(isUser && !split) ? (
           <Link href="/split/create">
@@ -71,7 +67,7 @@ export default async function ProfilePage({params}: {params: { id: string };}) {
 
       <section>
         <h1>Posts</h1>
-        <GroupPostHolder posts={posts} userId={user.id} fetch="User" />
+        <GroupPostHolder posts={posts} userId={user.id} fetch="User" showDelete={true} />
       </section>
     </main>
   );

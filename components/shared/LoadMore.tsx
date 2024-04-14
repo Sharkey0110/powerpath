@@ -11,9 +11,10 @@ interface LoadmoreParams {
   type: "Simple" | "Detailed";
   size?: string;
   fetch: "All" | "User"
+  showDelete: boolean
 }
 
-export default function LoadMore({ userId, type, size, fetch }: LoadmoreParams) {
+export default function LoadMore({ userId, type, size, fetch, showDelete }: LoadmoreParams) {
   const { ref, inView } = useInView();
   const [posts, setPosts] = useState<IPost[]>([]);
   const nextPageRef = useRef<number>(2); 
@@ -46,9 +47,7 @@ export default function LoadMore({ userId, type, size, fetch }: LoadmoreParams) 
           <Card post={post} type={type} size={size} showDelete={true} userId={userId} />
         </div>
       ))}
-      <section ref={ref}>
-        <p>End of posts</p>
-      </section>
+      <section ref={ref} />
     </>
   );
 }

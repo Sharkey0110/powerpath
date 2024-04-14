@@ -6,11 +6,11 @@ interface GroupPostProps {
   posts: IPost[],
   userId: string;
   fetch: "All" | "User"
+  showDelete: boolean
 }
 
 
-export default async function GroupPostHolder({ posts, userId, fetch }: GroupPostProps){
-  console.log(posts)
+export default async function GroupPostHolder({ posts, userId, fetch, showDelete }: GroupPostProps){
 
   return(
     <section >
@@ -20,11 +20,11 @@ export default async function GroupPostHolder({ posts, userId, fetch }: GroupPos
           {posts.map((post: IPost) => {
             return (
               <div key={post._id}>
-                <Card post={post} type="Simple" size="h-[142px] w-[142px] md:h-[220px] md:w-[220px]" showDelete={true} userId={userId} />
+                <Card post={post} type="Simple" size="h-[142px] w-[142px] md:h-[220px] md:w-[220px]" showDelete={showDelete} userId={userId} />
               </div>
             )
           })}
-          <LoadMore userId={userId} type="Simple" size="h-[142px] w-[142px] md:h-[220px] md:w-[220px]" fetch={fetch} />
+          <LoadMore userId={userId} type="Simple" size="h-[142px] w-[142px] md:h-[220px] md:w-[220px]" fetch={fetch} showDelete={showDelete} />
         </section>
       </div>
       ): (

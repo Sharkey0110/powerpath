@@ -18,7 +18,55 @@ export const commentFormSchema = z.object({
 
 export const splitFormSchema = z.object({
   title: z.string().max(64, "Too long"),
-  temp1: z.string(),
-  temp2: z.string(),
-  temp3: z.string()
-})
+  days: z.object({
+    monday: z.array(
+      z.object({
+        name: z.string().max(32, "Too long"),
+        sets: z.string(),
+        reps: z.string(),
+      })
+    ),
+    tuesday: z.array(
+      z.object({
+        name: z.string().max(32, "Too long"),
+        sets: z.string(),
+        reps: z.string(),
+      })
+    ),
+    wednesday: z.array(
+      z.object({
+        name: z.string().max(32, "Too long"),
+        sets: z.string(),
+        reps: z.string(),
+      })
+    ),
+    thursday: z.array(
+      z.object({
+        name: z.string().max(32, "Too long"),
+        sets: z.string(),
+        reps: z.string(),
+      })
+    ),
+    friday: z.array(
+      z.object({
+        name: z.string().max(32, "Too long"),
+        sets: z.string(),
+        reps: z.string(),
+      })
+    ),
+    saturday: z.array(
+      z.object({
+        name: z.string().max(32, "Too long"),
+        sets: z.string(),
+        reps: z.string(),
+      })
+    ),
+    sunday: z.array(
+      z.object({
+        name: z.string().max(32, "Too long"),
+        sets: z.string(),
+        reps: z.string(),
+      })
+    ),
+  }),
+});

@@ -25,7 +25,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
                 )
               })}
             </section>
-            <LoadMore userId={userId} type="Detailed" fetch="All" />
+            <LoadMore userId={userId} type="Detailed" fetch="All" showDelete={true}/>
           </div>
         ) : (
           <div>

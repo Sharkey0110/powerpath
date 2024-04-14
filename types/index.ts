@@ -35,10 +35,6 @@ export type CreatePostProps = {
   }
 }
 
-export type GroupPostProps = {
-  searchBy: string;
-}
-
 export type GetPostProps = {
   page: number;
   query?: string;
@@ -73,3 +69,47 @@ export type GetAccountParams = {
   userId: string;
   query?: string;
 }
+
+export type createSplitProps = {
+  userId: string;
+  split: {
+    days: {
+      monday: {
+        name: string;
+        sets: string;
+        reps: string;
+      }[]
+      tuesday: {
+        name: string;
+        sets: string;
+        reps: string;
+      }[]
+      wednesday: {
+        name: string;
+        sets: string;
+        reps: string;
+      }[]
+      thursday: {
+        name: string;
+        sets: string;
+        reps: string;
+      }[]
+      friday: {
+        name: string;
+        sets: string;
+        reps: string;
+      }[]
+      saturday: {
+        name: string;
+        sets: string;
+        reps: string;
+      }[]
+      sunday: {
+        name: string;
+        sets: string;
+        reps: string;
+      }[]
+    };
+    createdAt: number;
+  };
+};

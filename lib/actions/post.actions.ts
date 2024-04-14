@@ -1,6 +1,6 @@
 "use server"
 
-import { CreatePostProps, DeletePostParams, GetPostProps, GroupPostProps } from "@/types"
+import { CreatePostProps, DeletePostParams, GetPostProps } from "@/types"
 import { connectToDB } from "../database"
 import Post from "../database/models/post.model"
 import User from "../database/models/user.model"
