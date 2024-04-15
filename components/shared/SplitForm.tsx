@@ -42,7 +42,6 @@ function DayInput({ control, day }: DayInputProps) {
               <FormItem>
                 <FormControl>
                   <Dropdown
-                   type="Exercise"
                    onChangeHandler={field.onChange}
                    value={field.value}
                   />
