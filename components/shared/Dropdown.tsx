@@ -5,7 +5,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { ITag } from "@/lib/database/models/tag.model"
 import { startTransition, useEffect, useState } from "react"
 import {
   AlertDialog,
@@ -19,7 +18,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Input } from "../ui/input"
-import { createTag, getAllTags } from "@/lib/actions/tag.actions"
+import { IExercise } from "@/lib/database/models/exercise.model"
+import { createExercise, getAllExercises } from "@/lib/actions/exercise.actions"
 
 type DropdownProps = {
   value?: string
@@ -27,23 +27,23 @@ type DropdownProps = {
 }
 
 export default function Dropdown({ value, onChangeHandler }: DropdownProps){
-  const [tags, setTags] = useState<ITag[]>([])
-  const [newTag, setNewTag] = useState('');
+  const [exercises, setExercises] = useState<IExercise[]>([])
+  const [newExercise, setNewExercise] = useState('');
 
-  const handleAddTag = () => {
-    createTag({
-      tagName: newTag.trim()
+  const handleAddExercise = () => {
+    createExercise({
+      exerciseName: newExercise.trim()
     })
-      .then((tag) => {
-        setTags((prevState) => [...prevState, tag])
+      .then((exercise) => {
+        setExercises((prevState) => [...prevState, exercise])
       })
   }
 
   useEffect(() => {
     const getTags = async () => {
-      const tagList = await getAllTags();
+      const exerciseList = await getAllExercises();
 
-      tagList && setTags(tagList as ITag[])
+      exerciseList && setExercises(exerciseList as IExercise[])
     }
 
     getTags();
@@ -51,13 +51,13 @@ export default function Dropdown({ value, onChangeHandler }: DropdownProps){
 
   return (
     <Select onValueChange={onChangeHandler} defaultValue={value}>
-      <SelectTrigger className="bg-secondary border-none focus-visible:ring-0 md:text-lg">
-        <SelectValue placeholder="Tag" />
+      <SelectTrigger className="w-56 bg-secondary border-none focus-visible:ring-0 md:text-lg">
+        <SelectValue placeholder="Exercise" />
       </SelectTrigger>
       <SelectContent>
-        {tags.length > 0 && tags.map((tag) => (
-          <SelectItem key={tag._id} value={tag._id} className="text-md font-semibold md:text-lg">
-            {tag.tagName}
+        {exercises.length > 0 && exercises.map((exercise) => (
+          <SelectItem key={exercise._id} value={exercise.exerciseName} className="text-md font-semibold md:text-lg">
+            {exercise.exerciseName}
           </SelectItem>
         ))}
 
@@ -67,12 +67,12 @@ export default function Dropdown({ value, onChangeHandler }: DropdownProps){
             <AlertDialogHeader>
               <AlertDialogTitle>New Tag</AlertDialogTitle>
               <AlertDialogDescription>
-                <Input type="text" placeholder="Tag name" className="mt-3" onChange={(e) => setNewTag(e.target.value)} />
+                <Input type="text" placeholder="Exercise name" className="mt-3" onChange={(e) => setNewExercise(e.target.value)} />
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => startTransition(handleAddTag)}>Add</AlertDialogAction>
+              <AlertDialogAction onClick={() => startTransition(handleAddExercise)}>Add</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

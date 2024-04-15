@@ -21,16 +21,11 @@ export type SearchParamsProps = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export type CreateTagProps = {
-  tagName: string;
-};
-
 export type CreatePostProps = {
   userId: string;
   post: {
     text: string
     picture: string;
-    tag?: string;
     createdAt: number
   }
 }
@@ -73,43 +68,42 @@ export type GetAccountParams = {
 export type createSplitProps = {
   userId: string;
   split: {
-    days: {
-      monday: {
-        name: string;
-        sets: string;
-        reps: string;
-      }[]
-      tuesday: {
-        name: string;
-        sets: string;
-        reps: string;
-      }[]
-      wednesday: {
-        name: string;
-        sets: string;
-        reps: string;
-      }[]
-      thursday: {
-        name: string;
-        sets: string;
-        reps: string;
-      }[]
-      friday: {
-        name: string;
-        sets: string;
-        reps: string;
-      }[]
-      saturday: {
-        name: string;
-        sets: string;
-        reps: string;
-      }[]
-      sunday: {
-        name: string;
-        sets: string;
-        reps: string;
-      }[]
-    };
+    title: string
+    monday: {
+      name: string;
+      sets: string;
+      reps: string;
+    }[]
+    tuesday: {
+      name: string;
+      sets: string;
+      reps: string;
+    }[]
+    wednesday: {
+      name: string;
+      sets: string;
+      reps: string;
+    }[]
+    thursday: {
+      name: string;
+      sets: string;
+      reps: string;
+    }[]
+    friday: {
+      name: string;
+      sets: string;
+      reps: string;
+    }[]
+    saturday: {
+      name: string;
+      sets: string;
+      reps: string;
+    }[]
+    sunday: {
+      name: string;
+      sets: string;
+      reps: string;
+    }[]
     createdAt: number;
   };
-};
+  };

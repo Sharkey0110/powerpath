@@ -1,18 +1,50 @@
 import { Document, Schema, model, models } from "mongoose";
 
 interface Day {
-  [key: string]: [{
-    exercise: string;
-    sets: string;
-    reps: string;
-  }]
+  name: string;
+  sets: string;
+  reps: string;
 }
 
 export interface ISplit extends Document {
   _id: string,
   title: string;
-  author: { _id: string, name: string}
-  days: Day[]
+  author: { _id: string, name: string, username: string }
+  monday: [{
+    name: string;
+    sets: string;
+    reps: string;
+  }];
+  tuesday: [{
+    name: string;
+    sets: string;
+    reps: string;
+  }];
+  wednesday: [{
+    name: string;
+    sets: string;
+    reps: string;
+  }];
+  thursday: [{
+    name: string;
+    sets: string;
+    reps: string;
+  }];
+  friday: [{
+    name: string;
+    sets: string;
+    reps: string;
+  }];
+  saturday: [{
+    name: string;
+    sets: string;
+    reps: string;
+  }];
+  sunday: [{
+    name: string;
+    sets: string;
+    reps: string;
+  }];
 }
 
 const SplitSchema = new Schema({

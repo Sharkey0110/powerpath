@@ -5,61 +5,40 @@ import { connectToDB } from "../database"
 import Post from "../database/models/post.model"
 import User from "../database/models/user.model"
 import { handleError } from "../utils"
-import Tag from "../database/models/tag.model"
 import { revalidatePath } from 'next/cache'
 import Comment from "../database/models/comment.model"
-
-function populatePost(query: any){
-  return query
-    .populate({ path: 'author', model: User, select: '_id username photo' })
-    .populate({ path: 'tag', model: Tag, select: '_id tagName' })
-}
-
-async function getTagByName(name: string){
-  return Tag.findOne({tagName: { $regex: name, $options: 'i'}})
-}
 
 export async function createPost({ userId, post}: CreatePostProps){
   try{
     await connectToDB()
     const author = await User.findOne({ _id: userId });
     if(!author) throw new Error('User not found')
-    const newPost = await Post.create({...post, tag: post.tag, author: userId, createdAt: post.createdAt })
+    const newPost = await Post.create({...post, author: userId, createdAt: post.createdAt })
     return JSON.parse(JSON.stringify(newPost))
   } catch(e){
     handleError(e)
   }
 }
 
-export async function getAllPosts({ page, query }: GetPostProps){
-  const limit = 9
-  try{
+export async function getAllPosts({ page, query }: GetPostProps) {
+  const limit = 9;
+  try {
     await connectToDB();
 
-    const textCondition = query ? { text: { $regex: query, $options: 'i' } } : {};
-    const tagCondition = query ? await getTagByName(query) : null;
-    
-    let conditions = {};
-    
-    if (textCondition && tagCondition) {
-      conditions = {
-        $or: [
-          { textCondition },
-          { tag: tagCondition._id }
-        ]
-      };
-    } else if (textCondition) {
-      conditions = textCondition;
-    } else if (tagCondition) {
-      conditions = { tag: tagCondition._id };
+    const conditions: any = {};
+    if (query) {
+      conditions.text = { $regex: query, $options: 'i' };
     }
+    const skipAmount = (page - 1) * limit;
 
-    const skipAmount = (page - 1) * limit
+    const posts = await Post.find(conditions)
+      .sort({ createdAt: "desc" })
+      .skip(skipAmount)
+      .limit(limit)
+      .populate({ path: 'author', model: User, select: '_id username photo' });
 
-    const posts = await populatePost(Post.find(conditions).sort({ createdAt: "desc" }).skip(skipAmount).limit(limit));
-    const postCount = await Post.countDocuments(conditions)
-    return JSON.parse(JSON.stringify(posts))
-  } catch(error){
+    return JSON.parse(JSON.stringify(posts));
+  } catch (error) {
     handleError(error);
   }
 }
@@ -80,7 +59,7 @@ export async function getPostsByUser({searchBy, page} : {searchBy: string, page:
 export async function getPostById(id: string){
   try{
     await connectToDB()
-    const post = await populatePost(Post.find({_id: id}))
+    const post = await Post.find({_id: id}).populate({ path: 'author', model: User, select: '_id username photo' })
     return JSON.parse(JSON.stringify(post))
   } catch(error){
     handleError(error)

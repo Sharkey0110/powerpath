@@ -10,6 +10,7 @@ import { splitDefaultValues } from "@/constants"
 import { useForm, useFieldArray } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { createSplit } from "@/lib/actions/split.actions";
+import Dropdown from "./Dropdown";
 
 interface DayInputProps {
   control: any;
@@ -40,7 +41,11 @@ function DayInput({ control, day }: DayInputProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Exercise" {...field} className="bg-secondary text-white border-none focus-visible:ring-transparent"/>
+                  <Dropdown
+                   type="Exercise"
+                   onChangeHandler={field.onChange}
+                   value={field.value}
+                  />
                 </FormControl>
               </FormItem>
             )}
@@ -89,11 +94,22 @@ export default function SplitForm({ userId }: { userId: string }){
 
   //submit
   async function onSubmit(values: z.infer<typeof splitFormSchema>){
+    console.log(values)
     try{
       const newSplit = await createSplit({
-        split: { ...values, createdAt: Date.now()},
+        split: {
+          title: values.title,
+          monday:values.days.monday,
+          tuesday:values.days.tuesday,
+          wednesday:values.days.wednesday,
+          thursday:values.days.thursday,
+          friday:values.days.friday,
+          saturday:values.days.saturday,
+          sunday:values.days.sunday,
+          createdAt: Date.now()},
         userId
       })
+      console.log(newSplit)
 
       if(newSplit){
         form.reset();

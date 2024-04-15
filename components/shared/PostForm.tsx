@@ -95,21 +95,6 @@ export default function PostForm({ userId }: PostProps) {
                   </FormItem>
                 )}
               />
-
-              <FormField
-                control={form.control}
-                name="tag"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Dropdown
-                        onChangeHandler={field.onChange}
-                        value={field.value}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
           </div>
           </div>
             <Button

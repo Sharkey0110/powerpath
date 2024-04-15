@@ -1,5 +1,6 @@
 import DeleteButton from "@/components/shared/DeleteButton";
 import GroupPostHolder from "@/components/shared/GroupPostHolder";
+import SplitCard from "@/components/shared/SplitCard";
 import { Button } from "@/components/ui/button";
 import { getPostsByUser } from "@/lib/actions/post.actions";
 import { getSplitByUser } from "@/lib/actions/split.actions";
@@ -62,7 +63,7 @@ export default async function ProfilePage({params}: {params: { id: string };}) {
           </Link>
         ) :
          (!isUser && !split) ? <p>User does not have a split</p> :
-         split && <p>Show split</p>}
+         split && <SplitCard split={split} />}
       </section>
 
       <section>

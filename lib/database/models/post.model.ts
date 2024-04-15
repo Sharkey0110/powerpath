@@ -6,7 +6,6 @@ export interface IPost extends Document {
     text: string;
     picture: string;
     createdAt: number;
-    tag?: {_id: string, tagName: string};
 }
 
 const postSchema = new Schema({
@@ -14,7 +13,6 @@ const postSchema = new Schema({
   parentId: { type: String },
   text: { type: String, required: true },
   picture: { type: String, required: true },
-  tag: { type: Schema.Types.ObjectId, ref: "Tag" },
   createdAt: { type: Number, required: true }
 });
 
