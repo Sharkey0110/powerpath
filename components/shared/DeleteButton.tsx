@@ -14,7 +14,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ userId }) => {
 
     if (confirmed) {
       try {
-        await axios.post('/api/webhook/clerk/deleteUser', { userId });
+        await axios.post('/api/deleteUser', { userId });
         alert('User deleted successfully!');
       } catch (error) {
         console.error('Error deleting user:', error);
