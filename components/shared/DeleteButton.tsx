@@ -10,12 +10,16 @@ interface CustomButtonProps {
 
 const CustomButton: React.FC<CustomButtonProps> = ({ userId }) => {
   const handleDeleteUser = async () => {
-    try {
-      await axios.post('/api/webhook/clerk/deleteUser', { userId });
-      alert('User deleted successfully!');
-    } catch (error) {
-      console.error('Error deleting user:', error);
-      alert('An error occurred while deleting the user.');
+    const confirmed = window.confirm('Are you sure you want to delete this user?');
+
+    if (confirmed) {
+      try {
+        await axios.post('/api/webhook/clerk/deleteUser', { userId });
+        alert('User deleted successfully!');
+      } catch (error) {
+        console.error('Error deleting user:', error);
+        alert('An error occurred while deleting the user.');
+      }
     }
   };
 
