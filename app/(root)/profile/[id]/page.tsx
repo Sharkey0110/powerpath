@@ -1,4 +1,3 @@
-import DeleteButton from "@/components/shared/DeleteButton";
 import GroupPostHolder from "@/components/shared/GroupPostHolder";
 import SplitCard from "@/components/shared/SplitCard";
 import { Button } from "@/components/ui/button";
@@ -48,7 +47,6 @@ export default async function ProfilePage({params}: {params: { id: string };}) {
             </Button>
           </Link>
 
-          <DeleteButton userId= {userInfo._id} />
           </div>
         )}
       </section>

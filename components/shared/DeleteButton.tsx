@@ -1,5 +1,5 @@
-// CustomButton.tsx
 "use client"
+// CustomButton.tsx
 import React from 'react';
 import axios from 'axios';
 import { Button } from '../ui/button';
@@ -14,7 +14,8 @@ const CustomButton: React.FC<CustomButtonProps> = ({ userId }) => {
 
     if (confirmed) {
       try {
-        await axios.post('/api/deleteUser', { userId });
+        // Send a request to your server-side API endpoint
+        await axios.post('/api/webhook/clerk/deleteUser', { clerkUserId: userId });
         alert('User deleted successfully!');
       } catch (error) {
         console.error('Error deleting user:', error);
