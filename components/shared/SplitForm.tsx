@@ -9,7 +9,7 @@ import { splitFormSchema } from "@/lib/validator"
 import { splitDefaultValues } from "@/constants"
 import { useForm, useFieldArray } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { createSplit } from "@/lib/actions/split.actions";
+import { createSplit, updateSplit } from "@/lib/actions/split.actions";
 import Dropdown from "./Dropdown";
 import { ISplit } from "@/lib/database/models/split.model";
 
@@ -101,7 +101,6 @@ export default function SplitForm({ userId, type, split, splitId }: SplitFormPro
     }, {} as { [key: string]: any }) // Type assertion to inform TypeScript about the structure of acc
   } : splitDefaultValues;
   
-   console.log(initialValues)
   const router = useRouter();
   const form = useForm<z.infer<typeof splitFormSchema>>({
     resolver: zodResolver(splitFormSchema),
@@ -111,27 +110,49 @@ export default function SplitForm({ userId, type, split, splitId }: SplitFormPro
 
   //submit
   async function onSubmit(values: z.infer<typeof splitFormSchema>){
-    console.log(values)
     try{
-      const newSplit = await createSplit({
-        split: {
-          title: values.title,
-          monday:values.days.monday,
-          tuesday:values.days.tuesday,
-          wednesday:values.days.wednesday,
-          thursday:values.days.thursday,
-          friday:values.days.friday,
-          saturday:values.days.saturday,
-          sunday:values.days.sunday,
-          createdAt: Date.now()},
-        userId
-      })
-      console.log(newSplit)
-
-      if(newSplit){
-        form.reset();
-        router.push('/')
+      if(type === "Create"){
+        const newSplit = await createSplit({
+          split: {
+            title: values.title,
+            monday:values.days.monday,
+            tuesday:values.days.tuesday,
+            wednesday:values.days.wednesday,
+            thursday:values.days.thursday,
+            friday:values.days.friday,
+            saturday:values.days.saturday,
+            sunday:values.days.sunday,
+            createdAt: Date.now()},
+          userId
+        })
+  
+        if(newSplit){
+          form.reset();
+          router.push(`/profile/${userId}`)
+        }
       }
+
+      if(type === "Update"){
+        const updatedSplit = await updateSplit({
+          split: {
+            title: values.title,
+            monday:values.days.monday,
+            tuesday:values.days.tuesday,
+            wednesday:values.days.wednesday,
+            thursday:values.days.thursday,
+            friday:values.days.friday,
+            saturday:values.days.saturday,
+            sunday:values.days.sunday,
+            createdAt: Date.now()},
+          userId
+        })
+
+        if(updatedSplit){
+          form.reset();
+          router.push(`/profile/${userId}`)
+        }
+      }
+
     } catch(error){
       console.log(error)
     }

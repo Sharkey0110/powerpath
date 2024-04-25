@@ -34,7 +34,7 @@ export async function createSplit({ split, userId }: createSplitProps){
     await connectToDB()
     const author = await User.findOne({_id: userId});
     if(!author) throw new Error ("User not found")
-    const newSplit = await Split.create({...split, author: userId, createdAt: split.createdAt })
+    const newSplit = await Split.create({ ...split, author: userId, createdAt: split.createdAt })
   return JSON.parse(JSON.stringify(newSplit))
   } catch(error){
     handleError(error)
@@ -47,6 +47,18 @@ export async function deleteSplit({ id, path }: deleteSplitParams){
 
     const deletedSplit = await Split.findByIdAndDelete(id)
     if(deletedSplit) revalidatePath(path)
+  } catch(error){
+    handleError(error)
+  }
+}
+
+export async function updateSplit({ split, userId}: createSplitProps){
+  try{
+    await connectToDB()
+    const author = await User.findOne({_id: userId});
+    if(!author) throw new Error ("User not found")
+      const updatedSplit = await Split.findByIdAndUpdate({ ...split, author:userId, createdAt: split.createdAt })
+    return JSON.parse(JSON.stringify(updatedSplit))
   } catch(error){
     handleError(error)
   }
