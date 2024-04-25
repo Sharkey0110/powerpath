@@ -84,7 +84,7 @@ function DayInput({ control, day }: DayInputProps) {
 interface SplitFormProps{
   userId: string;
   type: "Create" | "Update";
-  split: ISplit
+  split?: ISplit
   splitId?: string;
 }
 
