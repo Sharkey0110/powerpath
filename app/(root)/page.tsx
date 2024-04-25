@@ -10,7 +10,6 @@ export default async function Home() {
   const userId = sessionClaims?.userId as string;
   const posts = await getAllPosts({page: 1});
 
-  console.log(posts)
 
 
   return(

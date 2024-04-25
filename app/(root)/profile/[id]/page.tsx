@@ -48,7 +48,7 @@ export default async function ProfilePage({params}: {params: { id: string };}) {
             </Button>
           </Link>
 
-          <DeleteButton id= {userInfo._id} />
+          <DeleteButton userId= {userInfo._id} />
           </div>
         )}
       </section>
