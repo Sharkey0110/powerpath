@@ -107,3 +107,8 @@ export type createSplitProps = {
     createdAt: number;
   };
   };
+
+export type deleteSplitParams = {
+  id: string;
+  path: string;
+}

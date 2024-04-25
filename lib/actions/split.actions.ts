@@ -4,8 +4,8 @@ import { connectToDB } from "../database"
 import User from "../database/models/user.model"
 import Split from "../database/models/split.model"
 import { handleError } from "../utils"
-import { createSplitProps } from "@/types"
-import Exercise from "../database/models/exercise.model"
+import { createSplitProps, deleteSplitParams } from "@/types"
+import { revalidatePath } from "next/cache"
 
 export async function getSplitByUser( userId : string ){
   try{
@@ -19,6 +19,16 @@ export async function getSplitByUser( userId : string ){
   }
 }
 
+export async function getSplitById(id: string){
+  try{
+    await connectToDB();
+    const split = await Split.findById(id)
+    return JSON.parse(JSON.stringify(split))
+  } catch(error){
+    handleError(error)
+  }
+}
+
 export async function createSplit({ split, userId }: createSplitProps){
   try{
     await connectToDB()
@@ -26,6 +36,17 @@ export async function createSplit({ split, userId }: createSplitProps){
     if(!author) throw new Error ("User not found")
     const newSplit = await Split.create({...split, author: userId, createdAt: split.createdAt })
   return JSON.parse(JSON.stringify(newSplit))
+  } catch(error){
+    handleError(error)
+  }
+}
+
+export async function deleteSplit({ id, path }: deleteSplitParams){
+  try{
+    await connectToDB()
+
+    const deletedSplit = await Split.findByIdAndDelete(id)
+    if(deletedSplit) revalidatePath(path)
   } catch(error){
     handleError(error)
   }

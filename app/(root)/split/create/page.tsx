@@ -11,7 +11,7 @@ export default async function createSplitPage(){
         <h1 className="text-2xl text-center">Creating a Split</h1>
       </div>
       <div className="pt-12">
-        <SplitForm userId={user.id} />
+        <SplitForm userId={user.id} type="Create" />
       </div>
     </section>
   )

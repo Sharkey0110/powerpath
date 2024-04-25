@@ -63,7 +63,7 @@ export default async function ProfilePage({params}: {params: { id: string };}) {
           </Link>
         ) :
          (!isUser && !split) ? <p>User does not have a split</p> :
-         split && <SplitCard split={split} />}
+         split && <SplitCard split={split} isUser={isUser} />}
       </section>
 
       <section>

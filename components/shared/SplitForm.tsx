@@ -11,6 +11,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { createSplit } from "@/lib/actions/split.actions";
 import Dropdown from "./Dropdown";
+import { ISplit } from "@/lib/database/models/split.model";
 
 interface DayInputProps {
   control: any;
@@ -80,10 +81,27 @@ function DayInput({ control, day }: DayInputProps) {
   );
 }
 
+interface SplitFormProps{
+  userId: string;
+  type: "Create" | "Update";
+  split: ISplit
+  splitId?: string;
+}
 
 //exported JSX component 
-export default function SplitForm({ userId }: { userId: string }){
-  const initialValues = splitDefaultValues
+export default function SplitForm({ userId, type, split, splitId }: SplitFormProps){
+  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+  //look at how chat gpt did this
+  const initialValues = split && type === "Update" ? {
+    ...split,
+    days: daysOfWeek.reduce((acc, day) => {
+      acc[day.toLowerCase()] = split[day.toLowerCase()];
+      return acc;
+    }, {} as { [key: string]: any }) // Type assertion to inform TypeScript about the structure of acc
+  } : splitDefaultValues;
+  
+   console.log(initialValues)
   const router = useRouter();
   const form = useForm<z.infer<typeof splitFormSchema>>({
     resolver: zodResolver(splitFormSchema),
@@ -118,9 +136,6 @@ export default function SplitForm({ userId }: { userId: string }){
       console.log(error)
     }
   }
-
-  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
   return (
     <Form {...form}>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center items-center gap-8">
@@ -136,7 +151,7 @@ export default function SplitForm({ userId }: { userId: string }){
               </FormItem>
             )}
           />
-          {days.map((day, index) => (
+          {daysOfWeek.map((day, index) => (
             <DayInput key={index} control={control} day={day} />
           ))}
         </div>

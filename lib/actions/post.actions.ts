@@ -37,7 +37,12 @@ export async function getAllPosts({ page, query }: GetPostProps) {
       .limit(limit)
       .populate({ path: 'author', model: User, select: '_id username photo' });
 
-    return JSON.parse(JSON.stringify(posts));
+      const postsWithCommentsCount = await Promise.all(posts.map(async (post) => {
+        const commentCount = await Comment.countDocuments({ post: post._id });
+        // Create a new object with comment count added to the post
+        return { ...post.toObject(), commentCount };
+      }));
+      return JSON.parse(JSON.stringify(postsWithCommentsCount))
   } catch (error) {
     handleError(error);
   }

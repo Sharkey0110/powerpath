@@ -32,10 +32,10 @@ export default function Card({ post, type, size, showDelete, userId }: PostProps
         </Link>
         {type === "Detailed" && (
           <div className="p-4">
-            <div className="flex gap-6 text-xs text-slate-400">
-              <p>Likes</p>
-              <Link href={`/posts/${post._id}`}>
+            <div className="flex gap-6 text-xs">
+              <Link href={`/posts/${post._id}`} className="flex gap-2 text-white justify-center items-center">
                 <Image src={"/icons/comment.svg"} width={20} height={20} alt="comment" className=""/>
+                <p>{post.commentCount} comments</p>
               </Link>
             </div>
 

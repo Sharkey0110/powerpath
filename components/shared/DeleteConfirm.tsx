@@ -1,6 +1,6 @@
 "use client"
 
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { useTransition } from "react"
 import Image from 'next/image'
 
@@ -18,12 +18,12 @@ import {
 
 import { deletePost } from '@/lib/actions/post.actions'
 import { deleteComment } from "@/lib/actions/comment.actions"
+import { deleteSplit } from "@/lib/actions/split.actions"
 
 
-export default function DeleteConfirm({id, type}: { id: string, type: "Comment" | "Post"}){
+export default function DeleteConfirm({id, type}: { id: string, type: "Comment" | "Post" | "Split"}){
   const pathname = usePathname()
   let [isPending, startTransition] = useTransition()
-  const router = useRouter();
 
   return(
     <AlertDialog>
@@ -45,12 +45,17 @@ export default function DeleteConfirm({id, type}: { id: string, type: "Comment" 
         <AlertDialogAction className="bg-red-500 hover:bg-red-700"
           onClick={() =>
             startTransition(async () => {
-              {type === "Post" ? (
-                await deletePost({ id, path: pathname })
-              ) : (
-                await deleteComment({ id, path: pathname })
-              )
-            }
+              switch (type) {
+                case "Post":
+                  await deletePost({ id, path: pathname });
+                  break;
+                case "Comment":
+                  await deleteComment({ id, path: pathname });
+                  break;
+                case "Split":
+                  await deleteSplit({ id, path: pathname });
+                  break;
+              }
             })
           }>
           {isPending ? 'Deleting...' : 'Delete'}

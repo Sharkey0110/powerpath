@@ -5,10 +5,12 @@ import { IPost } from "@/lib/database/models/post.model";
 import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 
-export default async function Home({ searchParams }: SearchParamsProps) {
+export default async function Home() {
   const { sessionClaims } = auth()
   const userId = sessionClaims?.userId as string;
   const posts = await getAllPosts({page: 1});
+
+  console.log(posts)
 
 
   return(

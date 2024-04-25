@@ -6,11 +6,11 @@ export interface IPost extends Document {
     text: string;
     picture: string;
     createdAt: number;
+    commentCount: number;
 }
 
 const postSchema = new Schema({
   author: { type: mongoose.Schema.Types.String, ref: 'User', required: true },
-  parentId: { type: String },
   text: { type: String, required: true },
   picture: { type: String, required: true },
   createdAt: { type: Number, required: true }
